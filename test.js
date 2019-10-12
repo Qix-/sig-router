@@ -11,7 +11,7 @@ const Root = () => {
 
 	router.unknownRouteComponent(() => (
 		<div>
-			<strong>Oh no!</strong> That doesn't appear to be a real page!
+			<strong>Oh no!</strong> That doesn&apos;t appear to be a real page!
 		</div>
 	));
 
@@ -80,7 +80,7 @@ const Root = () => {
 							such attacks.
 						</li>
 						<li>
-							Empty leafs work fine; it's up to the application
+							Empty leafs work fine; it&apos;s up to the application
 							to determine correctness (sig-router is
 							intentionally lightweight and unopinionated).
 						</li>
@@ -91,7 +91,7 @@ const Root = () => {
 						</li>
 						<li>
 							Try going forward and backward in time using the
-							browser's Back and Forward buttons.
+							browser&apos;s Back and Forward buttons.
 						</li>
 					</ul>
 				</p>

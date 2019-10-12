@@ -9,6 +9,12 @@ const Root = () => {
 	const name = S.value("");
 	const age = S.value("");
 
+	router.unknownRouteComponent(() => (
+		<div>
+			<strong>Oh no!</strong> That doesn't appear to be a real page!
+		</div>
+	));
+
 	router.add('/', () => (
 		<div>Waiting...</div>
 	));

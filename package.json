@@ -1,0 +1,35 @@
+{
+  "name": "sig-router",
+  "version": "0.1.0",
+  "description": "A router for S.js/Surplus applications",
+  "main": "index.js",
+  "repository": "qix-/sig-router",
+  "scripts": {
+    "bundle:dev": "parcel test.html ./dist/test.html"
+  },
+  "keywords": [
+    "s",
+    "s-js",
+    "s.js",
+    "surplus",
+    "signals",
+    "router",
+    "url",
+    "history"
+  ],
+  "author": "Josh Junon <josh@junon.me>",
+  "license": "MIT",
+  "peerDependencies": {
+    "s-js": ">=0.4.9"
+  },
+  "devDependencies": {
+    "parcel": "^1.12.4",
+    "parcel-bundler": "^1.12.4",
+    "parcel-plugin-surplus": "^1.3.0",
+    "surplus": "^0.5.3",
+    "surplus-mixin-data": "^0.5.0"
+  },
+  "files": [
+    "index.js"
+  ]
+}

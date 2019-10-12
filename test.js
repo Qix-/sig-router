@@ -15,6 +15,31 @@ const Root = () => {
 		</div>
 	));
 
+	/*
+		Demonstrates how you would make a single component
+		that is simply updated when a route changes instead
+		of re-rendering the entire component.
+	*/
+	const updateMessage = S.value(); // What is displayed
+	const nextUpdateMessage = S.value(""); // What is in the update message input field
+	const updateComponent = (() => {
+		return (
+			<div>
+				<strong>Update:</strong> {updateMessage()}
+			</div>
+		);
+	})();
+
+	router.add('/update', () => {
+		updateMessage("this is the default update message");
+		return updateComponent;
+	});
+
+	router.add('/update/:message', ({message}) => {
+		updateMessage(message);
+		return updateComponent;
+	});
+
 	router.add('/', () => (
 		<div>Waiting...</div>
 	));
@@ -71,6 +96,23 @@ const Root = () => {
 				</button>
 			</div>
 			<div>
+				<input type="text" placeholder="Update message" fn={data(nextUpdateMessage)} />
+			</div>
+			<div>
+				<button
+					onClick={() => router.go('/update')}
+				>
+					/update
+				</button>
+
+				<button
+					onClick={() => router.go(['update', nextUpdateMessage()])}
+					disabled={nextUpdateMessage().length === 0}
+				>
+					/update/{nextUpdateMessage()}
+				</button>
+			</div>
+			<div>
 				<p>Some notes:</p>
 				<p>
 					<ul>
@@ -92,6 +134,12 @@ const Root = () => {
 						<li>
 							Try going forward and backward in time using the
 							browser&apos;s Back and Forward buttons.
+						</li>
+						<li>
+							The "update" routes show a component that is never
+							fully re-rendered unless it's coming from a /greet route.
+							Changing the update routes (or using the default `/update` route)
+							only changes its state without fully re-rendering it.
 						</li>
 					</ul>
 				</p>

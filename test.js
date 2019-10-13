@@ -22,13 +22,11 @@ const Root = () => {
 	*/
 	const updateMessage = S.value(); // What is displayed
 	const nextUpdateMessage = S.value(""); // What is in the update message input field
-	const updateComponent = (() => {
-		return (
-			<div>
-				<strong>Update:</strong> {updateMessage()}
-			</div>
-		);
-	})();
+	const updateComponent = (
+		<div>
+			<strong>Update:</strong> {updateMessage()}
+		</div>
+	);
 
 	router.add('/update', () => {
 		updateMessage("this is the default update message");

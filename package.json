@@ -5,7 +5,7 @@
   "main": "index.js",
   "repository": "qix-/sig-router",
   "scripts": {
-    "bundle:dev": "parcel test.html ./dist/test.html"
+    "dev": "parcel test.html ./dist/test.html"
   },
   "keywords": [
     "s",

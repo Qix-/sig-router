@@ -1,9 +1,12 @@
 const S = require('s-js').default;
 
+const requestedURL = S.value(window.location.pathname);
+const filteredURL = S.value(window.location.pathname);
 const currentURL = S.value(window.location.pathname);
 const currentLeafs = S.data([]);
 const currentComponent = S.value(null);
 const selectedComponent = S.value(null);
+const routeMiddleware = S.data((req, res) => res(req()));
 const unknownComponent = S.value(
 	() => document.createTextNode('Not found')
 );
@@ -15,7 +18,8 @@ const splitAndClean = pth => {
 	const leafs = pth
 		.trim()
 		.replace(/^\/+|\/+$/g, '')
-		.split(/\//g);
+		.split(/\//g)
+		.map(p => decodeURIComponent(p));
 
 	if (leafs.length === 1 && leafs[0] === '') {
 		return [];
@@ -23,6 +27,13 @@ const splitAndClean = pth => {
 
 	return leafs;
 }
+
+const escapeUrl = newUrl =>
+	Array.isArray(newUrl)
+		? '/' + (newUrl
+			.map(leaf => encodeURIComponent(leaf))
+			.join('/'))
+		: newUrl.toString();
 
 function addRoute(path, renderer) {
 	const leafs = splitAndClean(path);
@@ -51,19 +62,33 @@ function addRoute(path, renderer) {
 }
 
 S.root(() => {
+	history.replaceState(
+		S.sample(currentURL),
+		window.title,
+		S.sample(currentURL)
+	);
+
 	S(() => currentComponent(
 		selectedComponent() || unknownComponent()
 	));
 
-	history.replaceState(
-		currentURL(),
-		window.title,
-		currentURL()
-	);
+	S(() => routeMiddleware()(requestedURL, filteredURL));
+
+	S(() => {
+		currentURL(escapeUrl(filteredURL()));
+	});
 
 	window.addEventListener('popstate', ev => {
 		currentURL(ev.state);
 	});
+
+	S.on(filteredURL, () => {
+		history.pushState(
+			filteredURL(),
+			window.title, // not honored in modern browsers
+			escapeUrl(filteredURL())
+		);
+	}, null, true);
 
 	S(() => {
 		routesHaveUpdated(); // Create dependency
@@ -98,24 +123,13 @@ S.root(() => {
 });
 
 function goToUrl(newUrl) {
-	currentURL(newUrl);
-
-	const escapedURL = Array.isArray(newUrl)
-		? '/' + (newUrl
-			.map(leaf => encodeURIComponent(leaf))
-			.join('/'))
-		: newUrl.toString();
-
-	history.pushState(
-		newUrl,
-		window.title, // not honored in modern browsers
-		escapedURL
-	);
+	requestedURL(escapeUrl(newUrl));
 }
 
 module.exports = {
 	add: addRoute,
 	unknownRouteComponent: unknownComponent,
+	middleware: routeMiddleware,
 	component: currentComponent,
 	go: goToUrl
 }

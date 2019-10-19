@@ -16,6 +16,17 @@ const Root = () => {
 	));
 
 	/*
+		Demonstrates how you would make a route filter.
+	*/
+	router.middleware((requestedUrl, targetUrl) => {
+		targetUrl(
+			requestedUrl().match(/^\/unicorns(\/.*)?$/)
+				? ["greet", "Sindre Sorhus"]
+				: requestedUrl()
+		);
+	});
+
+	/*
 		Demonstrates how you would make a single component
 		that is simply updated when a route changes instead
 		of re-rendering the entire component.

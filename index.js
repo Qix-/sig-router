@@ -131,5 +131,11 @@ module.exports = {
 	unknownRouteComponent: unknownComponent,
 	middleware: routeMiddleware,
 	component: currentComponent,
-	go: goToUrl
+	go: goToUrl,
+	get leafs() {
+		return currentLeafs();
+	},
+	get url() {
+		return currentURL();
+	}
 }

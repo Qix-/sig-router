@@ -136,8 +136,5 @@ module.exports = {
 	go: goToUrl,
 	get leafs() {
 		return currentLeafs();
-	},
-	get url() {
-		return currentURL();
 	}
 }

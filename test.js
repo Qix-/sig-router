@@ -122,6 +122,12 @@ const Root = () => {
 				</button>
 			</div>
 			<div>
+				<p>Current leafs:</p>
+				<ul>
+					{router.leafs.map(l => (<li>{l}</li>))}
+				</ul>
+			</div>
+			<div>
 				<p>Some notes:</p>
 				<p>
 					<ul>

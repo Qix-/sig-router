@@ -97,6 +97,8 @@ S.root(() => {
 			? currentURL()
 			: splitAndClean(currentURL());
 
+		currentLeafs(leafs);
+
 		let cur = routes;
 		for (let leaf of leafs) {
 			if (cur.hasOwnProperty('!' + leaf)) {

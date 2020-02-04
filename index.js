@@ -7,9 +7,8 @@ const currentLeafs = S.data([]);
 const currentComponent = S.value(null);
 const selectedComponent = S.value(null);
 const routeMiddleware = S.data((req, res) => res(req()));
-const unknownComponent = S.value(
-	() => document.createTextNode('Not found')
-);
+const defaultComponent = () => document.createTextNode('Not found');
+const unknownComponent = S.value();
 
 const routes = {};
 const routesHaveUpdated = S.data();
@@ -26,13 +25,11 @@ const splitAndClean = pth => {
 	}
 
 	return leafs;
-}
+};
 
 const escapeUrl = newUrl =>
 	Array.isArray(newUrl)
-		? '/' + (newUrl
-			.map(leaf => encodeURIComponent(leaf))
-			.join('/'))
+		? '/' + newUrl.map(leaf => encodeURIComponent(leaf)).join('/')
 		: newUrl.toString();
 
 function addRoute(path, renderer) {
@@ -57,8 +54,12 @@ function addRoute(path, renderer) {
 		cur = cur[leaf];
 	}
 
-	cur['@'] = {vars, renderer};
+	cur['@'] = { vars, renderer };
 	routesHaveUpdated(true);
+}
+
+function checkDefaultComponent(c) {
+	return c && c instanceof HTMLElement ? c : defaultComponent;
 }
 
 S.root(() => {
@@ -68,9 +69,11 @@ S.root(() => {
 		S.sample(currentURL)
 	);
 
-	S(() => currentComponent(
-		selectedComponent() || unknownComponent()
-	));
+	S(() =>
+		currentComponent(
+			checkDefaultComponent(selectedComponent() || unknownComponent())
+		)
+	);
 
 	S(() => routeMiddleware()(requestedURL, filteredURL));
 
@@ -82,13 +85,18 @@ S.root(() => {
 		currentURL(ev.state);
 	});
 
-	S.on(filteredURL, () => {
-		history.pushState(
-			filteredURL(),
-			window.title, // not honored in modern browsers
-			escapeUrl(filteredURL())
-		);
-	}, null, true);
+	S.on(
+		filteredURL,
+		() => {
+			history.pushState(
+				filteredURL(),
+				window.title, // not honored in modern browsers
+				escapeUrl(filteredURL())
+			);
+		},
+		null,
+		true
+	);
 
 	S(() => {
 		routesHaveUpdated(); // Create dependency
@@ -112,7 +120,7 @@ S.root(() => {
 		}
 
 		if (cur.hasOwnProperty('@')) {
-			const {vars, renderer} = cur['@'];
+			const { vars, renderer } = cur['@'];
 			const props = {};
 			for (const propName of Object.keys(vars)) {
 				props[propName] = leafs[vars[propName]];
@@ -137,4 +145,4 @@ module.exports = {
 	get leafs() {
 		return currentLeafs();
 	}
-}
+};

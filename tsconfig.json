@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "module": "es2015",
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "noErrorTruncation": true,
+    "noEmitOnError": true,
+    "noFallthroughCasesInSwitch": true,
+    "noEmitHelpers": true,
+    "skipLibCheck": true,
+    "noImplicitAny": true,
+    "noImplicitUseStrict": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedParameters": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictPropertyInitialization": true,
+    "target": "ES2015",
+    "sourceMap": true,
+    "stripInternal": true,
+    "lib": ["es2015", "dom"],
+    "newLine": "lf",
+    "moduleResolution": "node",
+    "jsx": "preserve",
+    "jsxFactory": "Surplus"
+  },
+  "include": [
+    "./*.ts",
+    "./*.tsx"
+  ]
+}

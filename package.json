@@ -1,6 +1,6 @@
 {
   "name": "sig-router",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "A router for S.js/Surplus applications",
   "main": "index.js",
   "repository": "qix-/sig-router",

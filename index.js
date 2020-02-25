@@ -141,6 +141,7 @@ module.exports = {
 	unknownRouteComponent: unknownComponent,
 	middleware: routeMiddleware,
 	component: currentComponent,
+	escapeUrl,
 	go: goToUrl,
 	get leafs() {
 		return currentLeafs();

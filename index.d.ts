@@ -12,3 +12,5 @@ export declare const component: DataSignal<JSX.Element>;
 export declare function go(string): DataSignal<string>;
 
 export declare const leafs: DataSignal<string[]>;
+
+export declare function escapeUrl(path: string | string[]): string;

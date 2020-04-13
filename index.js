@@ -75,7 +75,9 @@ S.root(() => {
 		)
 	);
 
-	S(() => routeMiddleware()(requestedURL, filteredURL));
+	S(() => S.freeze(() => {
+		routeMiddleware()(requestedURL, filteredURL)
+	}));
 
 	S(() => {
 		currentURL(escapeUrl(filteredURL()));

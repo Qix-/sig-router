@@ -90,11 +90,16 @@ S.root(() => {
 	S.on(
 		filteredURL,
 		() => {
-			history.pushState(
-				filteredURL(),
-				window.title, // not honored in modern browsers
-				escapeUrl(filteredURL())
-			);
+			const filtered = filteredURL();
+			const newURL = escapeUrl(filtered);
+
+			if (newURL !== history.state) {
+				history.pushState(
+					filtered,
+					window.title, // not honored in modern browsers
+					newURL
+				);
+			}
 		},
 		null,
 		true

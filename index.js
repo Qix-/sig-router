@@ -1,9 +1,9 @@
 const S = require('s-js').default;
 
-const requestedURL = S.data(window.location.pathname);
-const filteredURL = S.data(window.location.pathname);
-const currentURL = S.data(window.location.pathname);
-const currentLeafs = S.data([]);
+const requestedURL = S.value(window.location.pathname);
+const filteredURL = S.value(window.location.pathname);
+const currentURL = S.value(window.location.pathname);
+const currentLeafs = S.value([]);
 const currentComponent = S.value(null);
 const selectedComponent = S.value(null);
 const routeMiddleware = S.data((req, res) => res(req()));
@@ -75,9 +75,14 @@ S.root(() => {
 		)
 	);
 
-	S(() => S.freeze(() => {
-		routeMiddleware()(requestedURL, filteredURL)
-	}));
+	S(() => {
+		// force dependency on requestedURL
+		requestedURL();
+
+		S.freeze(() => {
+			routeMiddleware()(requestedURL, filteredURL)
+		});
+	});
 
 	S(() => {
 		currentURL(escapeUrl(filteredURL()));

@@ -1,9 +1,9 @@
 const S = require('s-js').default;
 
-const requestedURL = S.value(window.location.pathname);
-const filteredURL = S.value(window.location.pathname);
-const currentURL = S.value(window.location.pathname);
-const currentLeafs = S.value([]);
+const requestedURL = S.data(window.location.pathname);
+const filteredURL = S.data(window.location.pathname);
+const currentURL = S.data(window.location.pathname);
+const currentLeafs = S.data([]);
 const currentComponent = S.value(null);
 const selectedComponent = S.value(null);
 const routeMiddleware = S.data((req, res) => res(req()));

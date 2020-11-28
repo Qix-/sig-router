@@ -8,7 +8,7 @@ const currentComponent = S.value(null);
 const selectedComponent = S.value(null);
 const routeMiddleware = S.data((req, res) => res(req()));
 const defaultComponent = () => document.createTextNode('Not found');
-const unknownComponent = S.value();
+const unknownComponent = S.value(defaultComponent);
 
 const routes = {};
 const routesHaveUpdated = S.data();
@@ -58,10 +58,6 @@ function addRoute(path, renderer) {
 	routesHaveUpdated(true);
 }
 
-function checkDefaultComponent(c) {
-	return c && c instanceof HTMLElement ? c : defaultComponent;
-}
-
 S.root(() => {
 	history.replaceState(
 		S.sample(currentURL),
@@ -71,7 +67,7 @@ S.root(() => {
 
 	S(() =>
 		currentComponent(
-			checkDefaultComponent(selectedComponent() || unknownComponent())
+			selectedComponent() || unknownComponent()
 		)
 	);
 

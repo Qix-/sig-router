@@ -9,7 +9,9 @@ export declare const middleware: DataSignal<() => JSX.Element>;
 
 export declare const component: DataSignal<JSX.Element>;
 
-export declare function go(string): DataSignal<string>;
+export declare function go(string | string[]): void;
+
+export declare function goRel(string | string[]): void;
 
 export declare const leafs: DataSignal<string[]>;
 

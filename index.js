@@ -146,11 +146,15 @@ function goToUrl(newUrl) {
 
 function goToRelative(newUrl) {
 	const leafs = S.sample(currentLeafs);
-	requestedURL(
+	requestedURL(escapeUrl(
 		leafs.length === 0
-			? escapeUrl(newUrl)
-			: leafs.slice(0, leafs.length - 1).concat(escapeUrl(newUrl))
-	);
+			? newUrl
+			: leafs
+				.slice(0, leafs.length - 1)
+				.concat(
+					splitAndClean(escapeUrl(newUrl))
+				)
+	));
 }
 
 const readOnly = fn => {

@@ -144,14 +144,22 @@ function goToUrl(newUrl) {
 	requestedURL(escapeUrl(newUrl));
 }
 
+const readOnly = fn => {
+	return (...args) => {
+		if (args.length > 0) {
+			throw new Error('signal is read-only');
+		}
+
+		return fn();
+	};
+};
+
 module.exports = {
 	add: addRoute,
 	unknownRouteComponent: unknownComponent,
 	middleware: routeMiddleware,
-	component: currentComponent,
+	component: readOnly(currentComponent),
 	escapeUrl,
 	go: goToUrl,
-	get leafs() {
-		return currentLeafs();
-	}
+	leafs: readOnly(currentLeafs)
 };

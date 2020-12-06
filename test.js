@@ -124,7 +124,7 @@ const Root = () => {
 			<div>
 				<p>Current leafs:</p>
 				<ul>
-					{router.leafs.map(l => (<li>{l}</li>))}
+					{router.leafs().map(l => (<li>{l}</li>))}
 				</ul>
 			</div>
 			<div>
